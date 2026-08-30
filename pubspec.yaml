@@ -1,0 +1,23 @@
+name: rural_runoff
+description: Rural runoff discharge calculator using Rational Method
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.5.1
+  sqflite: ^2.3.2
+  path: ^1.9.0
+  pdf: ^3.10.8
+  printing: ^5.12.0
+  geolocator: ^11.0.0
+  intl: ^0.19.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
