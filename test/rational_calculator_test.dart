@@ -83,6 +83,8 @@ void main() {
       expect(result.peakDischargeM3s, closeTo(11.111, 0.01));
       expect(result.peakDischargeLps, closeTo(11111.11, 10.0));
       expect(result.areaExceedsLimit, isFalse);
+      // Triangular hydrograph volume = 0.5 * Qp * (2 * tc * 60)
+      expect(result.runoffVolumeM3, closeTo(result.peakDischargeM3s * result.tcMinutes * 60, 1e-9));
     });
 
     test('Calculates runoff with IDF equation parameters', () {

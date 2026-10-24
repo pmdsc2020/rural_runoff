@@ -28,4 +28,7 @@ class CalculationResult {
     required this.areaExceedsLimit,
     required this.substitutionSteps,
   });
+
+  /// Runoff volume of the Rational triangular hydrograph (base = 2 * tc).
+  double get runoffVolumeM3 => peakDischargeM3s * tcMinutes * 60.0;
 }

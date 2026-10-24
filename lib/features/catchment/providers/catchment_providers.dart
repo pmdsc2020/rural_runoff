@@ -62,6 +62,11 @@ class ProjectsNotifier extends StateNotifier<AsyncValue<List<CatchmentProject>>>
   }
 
   Future<void> delete(int id) async {
+    // Drop it from state first: a swiped Dismissible must leave the tree synchronously.
+    final current = state.valueOrNull;
+    if (current != null) {
+      state = AsyncValue.data(current.where((p) => p.id != id).toList());
+    }
     await AppDatabase.instance.deleteProject(id);
     await loadProjects();
   }

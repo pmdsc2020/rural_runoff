@@ -2,7 +2,7 @@ name: Build Release APK
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, 'claude/**' ]
   workflow_dispatch:
 
 jobs:
@@ -25,13 +25,19 @@ jobs:
           cache: true
 
       - name: Generate Android Files
-        run: flutter create . --platforms=android
+        run: |
+          flutter create . --platforms=android --org com.ruralrunoff
+          # Location permissions for outlet GPS capture, and a readable launcher label
+          M=android/app/src/main/AndroidManifest.xml
+          sed -i -e 's#^\(\s*\)<application#\1<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>\n\1<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>\n\1<application#' \
+                 -e 's#android:label="rural_runoff"#android:label="RuralRunoff"#' $M
+          grep -q ACCESS_FINE_LOCATION $M
 
       - name: Install Dependencies
         run: flutter pub get
 
       - name: Run Tests
-        run: flutter test test/rational_calculator_test.dart
+        run: flutter test test/rational_calculator_test.dart test/app_flow_test.dart
 
       - name: Build APK
         run: flutter build apk --release
